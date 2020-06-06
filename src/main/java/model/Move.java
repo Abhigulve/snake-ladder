@@ -13,4 +13,6 @@ public abstract class Move {
         return nextPosition;
     }
     abstract public void setNextPosition(int startPosition, int endPosition) throws InvalidPositionException;
+
+    public abstract boolean checkPosition(int cellPosition) throws InvalidPositionException;
 }

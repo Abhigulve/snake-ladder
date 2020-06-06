@@ -11,6 +11,9 @@ public class Board {
 
     public int getNextPosition(int currentPosition, int score) {
         Cell nextCellByPosition = getNextCellByPosition(currentPosition + score);
+        if (nextCellByPosition == null) {
+            return currentPosition;
+        }
         Move move = nextCellByPosition.getMove();
         if (move != null) {
             return move.getPosition();

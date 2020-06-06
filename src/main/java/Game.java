@@ -25,9 +25,9 @@ public class Game {
     void playGame() {
         int i = 0;
         Map<Integer, Player> res = new HashMap<>();
-        Queue<Player> queue = new PriorityQueue<>(playerList);
+        Queue<Player> queue = new ArrayDeque<>(playerList);
         while (queue.size() != 1) {
-            Player player = queue.peek();
+            Player player = queue.poll();
             assert player != null;
             play(player);
             if (!checkReachToEnd(player)) {
@@ -43,7 +43,7 @@ public class Game {
 
     private void declareResult(Map<Integer, Player> res) {
         res.forEach((K, V) -> {
-            System.out.println(V + "ranks " + K);
+            System.out.println(V + " ranks " + K);
         });
     }
 

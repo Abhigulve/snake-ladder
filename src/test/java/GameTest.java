@@ -1,6 +1,8 @@
+import exception.InvalidPositionException;
 import model.Board;
 import model.Cell;
 import model.Player;
+import model.Snake;
 import org.junit.Before;
 import org.junit.Test;
 import strategy.CrookedDice;
@@ -12,6 +14,9 @@ import java.util.List;
 public class GameTest {
 
     private Game game;
+    List<Player> playerList;
+    Board board;
+    DiceStrategy diceStrategy;
 
     @Before
     public void before() {
@@ -19,15 +24,24 @@ public class GameTest {
         Board board;
         DiceStrategy diceStrategy;
         playerList = new ArrayList<>();
-        playerList.add(new Player(1, "A"));
-        playerList.add(new Player(1, "B"));
-        board = new Board(getCells(100));
+        playerList.add(new Player(0, "A"));
+        playerList.add(new Player(0, "B"));
+        List<Cell> cells = getCells(100);
+        board = new Board(cells);
         diceStrategy = new CrookedDice();
         game = new Game(playerList, board, diceStrategy);
 
     }
+
+    @Test(expected = InvalidPositionException.class)
+    public void invalidMoveTest() throws InvalidPositionException {
+        List<Cell> cells = getCells(100);
+        cells.get(2).setMove(new Snake(4));
+    }
+
+
     @Test
-    public void Test(){
+    public void Test() {
         game.playGame();
     }
 
