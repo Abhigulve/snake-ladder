@@ -29,17 +29,9 @@ public class Player {
         this.playerName = playerName;
     }
 
-    public String getPlayerName() {
-        return playerName;
-    }
-
     @Override
     public String toString() {
         return "Player :" + playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
     }
 
     public void setPosition(int position) {

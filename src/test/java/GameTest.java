@@ -30,7 +30,6 @@ public class GameTest {
         board = new Board(cells);
         diceStrategy = new CrookedDice();
         game = new Game(playerList, board, diceStrategy);
-
     }
 
     @Test(expected = InvalidPositionException.class)
@@ -38,7 +37,6 @@ public class GameTest {
         List<Cell> cells = getCells(100);
         cells.get(2).setMove(new Snake(4));
     }
-
 
     @Test
     public void Test() {
