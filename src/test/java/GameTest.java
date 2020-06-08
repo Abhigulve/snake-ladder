@@ -3,10 +3,12 @@ import model.Board;
 import model.Cell;
 import model.Player;
 import model.Snake;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import strategy.CrookedDice;
 import strategy.DiceStrategy;
+import strategy.NormalDice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,17 @@ public class GameTest {
         game = new Game(playerList, board, diceStrategy);
     }
 
+    @Test
+    public void normalDiceTest() {
+        game.setDiceStrategy(new NormalDice());
+        game.playGame();
+    }
+
+    @Test
+    public void crookedDiceTest() {
+        game.setDiceStrategy(new CrookedDice());
+    }
+
     @Test(expected = InvalidPositionException.class)
     public void invalidMoveTest() throws InvalidPositionException {
         List<Cell> cells = getCells(100);
@@ -39,8 +52,11 @@ public class GameTest {
     }
 
     @Test
-    public void Test() {
-        game.playGame();
+    public void validMoveTest() throws InvalidPositionException {
+        List<Cell> cells = getCells(100);
+        Snake move = new Snake(0);
+        cells.get(2).setMove(move);
+        Assert.assertEquals(cells.get(2).getMove(), move);
     }
 
     private List<Cell> getCells(int numberOfCells) {

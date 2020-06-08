@@ -8,6 +8,15 @@ import java.util.*;
 public class Game {
     private List<Player> playerList;
     private Board board;
+
+    public DiceStrategy getDiceStrategy() {
+        return diceStrategy;
+    }
+
+    public void setDiceStrategy(DiceStrategy diceStrategy) {
+        this.diceStrategy = diceStrategy;
+    }
+
     private DiceStrategy diceStrategy;
 
     public Game(List<Player> playerList, Board board, DiceStrategy diceStrategy) {
@@ -28,7 +37,6 @@ public class Game {
         Queue<Player> queue = new ArrayDeque<>(playerList);
         while (queue.size() != 1) {
             Player player = queue.poll();
-            assert player != null;
             play(player);
             if (!checkReachToEnd(player)) {
                 queue.add(player);
@@ -42,9 +50,7 @@ public class Game {
     }
 
     private void declareResult(Map<Integer, Player> res) {
-        res.forEach((K, V) -> {
-            System.out.println(V + " ranks " + K);
-        });
+        res.forEach((k, v) -> System.out.println(v + " ranks " + k));
     }
 
     private boolean checkReachToEnd(Player player) {

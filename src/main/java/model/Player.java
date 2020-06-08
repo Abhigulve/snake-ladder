@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Player {
     private int position;
-    private String playerName;
+    private final String playerName;
 
     public int getPosition() {
         return position;
