@@ -2,7 +2,7 @@ package strategy;
 
 import java.util.Random;
 
-public class CrookedDice implements DiceStrategy {
+public class CrookedDice implements Dice {
     @Override
     public int rollDice() {
         Random random = new Random();

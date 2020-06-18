@@ -8,16 +8,9 @@ public class Snake extends Move {
     }
 
     @Override
-    public void setNextPosition(int startPosition, int endPosition) throws InvalidPositionException {
-        if (startPosition > endPosition)
-            this.nextPosition = endPosition;
-        else throw new InvalidPositionException("cell current Position should always greater next position");
-    }
-
-    @Override
-    public boolean checkPosition(int cellPosition) throws InvalidPositionException {
+    public boolean isValidPosition(int cellPosition) throws InvalidPositionException {
         if (cellPosition > nextPosition)
             return true;
-        else throw new InvalidPositionException("cell position always greater that next position");
+        else throw new InvalidPositionException("cell position always greater than next position of snake");
     }
 }

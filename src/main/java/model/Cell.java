@@ -19,7 +19,7 @@ public class Cell {
     }
 
     public void setMove(Move move) throws InvalidPositionException {
-        if (move.checkPosition(position)) {
+        if (move.isValidPosition(position)) {
             this.move = move;
         }
     }

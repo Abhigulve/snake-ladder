@@ -1,48 +1,55 @@
+import exception.InvalidPlayerException;
 import model.Board;
 import model.Player;
 
-import strategy.DiceStrategy;
+import strategy.Dice;
 
 import java.util.*;
 
 public class Game {
     private List<Player> playerList;
     private Board board;
+    private Dice dice;
+    private Map<Integer, Player> res;
+    private int winnerCount;
 
-    public DiceStrategy getDiceStrategy() {
-        return diceStrategy;
+    public Map<Integer, Player> getRes() {
+        return res;
     }
 
-    public void setDiceStrategy(DiceStrategy diceStrategy) {
-        this.diceStrategy = diceStrategy;
+    public Dice getDice() {
+        return dice;
     }
 
-    private DiceStrategy diceStrategy;
+    public void setDice(Dice dice) {
+        this.dice = dice;
+    }
 
-    public Game(List<Player> playerList, Board board, DiceStrategy diceStrategy) {
+    public Game(List<Player> playerList, Board board, Dice dice) {
         this.playerList = playerList;
         this.board = board;
-        this.diceStrategy = diceStrategy;
+        this.dice = dice;
+        this.res = new HashMap<>();
     }
 
-    void play(Player player) {
-        int score = diceStrategy.rollDice();
-        int nextPosition = board.getNextPosition(player.getPosition(), score);
-        player.setPosition(nextPosition);
+    void play(Player player) throws InvalidPlayerException {
+        if (!checkReachToEnd(player)) {
+            int score = dice.rollDice();
+            int nextPosition = board.getNextPosition(player.getPosition(), score);
+            player.setPosition(nextPosition);
+            if (checkReachToEnd(player))
+                res.put(++winnerCount, player);
+        } else throw new InvalidPlayerException("player already reach end of game");
     }
 
-    void playGame() {
+    void playGame() throws InvalidPlayerException {
         int i = 0;
-        Map<Integer, Player> res = new HashMap<>();
         Queue<Player> queue = new ArrayDeque<>(playerList);
         while (queue.size() != 1) {
             Player player = queue.poll();
             play(player);
             if (!checkReachToEnd(player)) {
                 queue.add(player);
-            } else {
-                i = i + 1;
-                res.put(i, player);
             }
         }
         res.put(++i, queue.peek());

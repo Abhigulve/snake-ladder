@@ -9,10 +9,9 @@ public abstract class Move {
         this.nextPosition = nextPosition;
     }
 
-    public int getPosition() {
+    public int getNextPosition() {
         return nextPosition;
     }
-    abstract public void setNextPosition(int startPosition, int endPosition) throws InvalidPositionException;
 
-    public abstract boolean checkPosition(int cellPosition) throws InvalidPositionException;
+    public abstract boolean isValidPosition(int cellPosition) throws InvalidPositionException;
 }

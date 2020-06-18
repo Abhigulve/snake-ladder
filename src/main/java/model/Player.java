@@ -6,6 +6,10 @@ public class Player {
     private int position;
     private final String playerName;
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
     public int getPosition() {
         return position;
     }

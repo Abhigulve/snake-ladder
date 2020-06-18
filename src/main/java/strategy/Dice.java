@@ -1,6 +1,6 @@
 package strategy;
 
 
-public interface DiceStrategy {
+public interface Dice {
     public int rollDice();
 }
