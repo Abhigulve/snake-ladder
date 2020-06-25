@@ -1,6 +1,8 @@
+import exception.GameOverException;
 import exception.InvalidPlayerException;
 import model.Board;
 import model.Cell;
+import model.DefaultMove;
 import model.Player;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameTest {
-
     private Game game;
     List<Player> playerList;
     Board board;
@@ -38,24 +39,35 @@ public class GameTest {
     }
 
     @Test
-    public void endToEndTest() throws InvalidPlayerException {
+    public void endToEndTest() throws InvalidPlayerException, GameOverException {
         Player p1 = playerList.get(0);
         Player p2 = playerList.get(1);
-        game.play(p1);
+        game.play(game.getNextPlayerToPlay());
         Assert.assertEquals(25, p1.getPosition());
-        game.play(p2);
+        game.play(game.getNextPlayerToPlay());
         Assert.assertEquals(25, p2.getPosition());
-        game.play(p1);
+        game.play(game.getNextPlayerToPlay());
         Assert.assertEquals(50, p1.getPosition());
-        game.play(p2);
+        game.play(game.getNextPlayerToPlay());
         Assert.assertEquals(50, p2.getPosition());
-        game.play(p1);
+        game.play(game.getNextPlayerToPlay());
         Assert.assertEquals(75, p1.getPosition());
-        game.play(p2);
+        game.play(game.getNextPlayerToPlay());
         Assert.assertEquals(75, p2.getPosition());
-        game.play(p1);
+        game.play(game.getNextPlayerToPlay());
         Assert.assertEquals(100, p1.getPosition());
         Assert.assertEquals(p1, game.getRes().get(1));
+        p1.setPosition(0);
+        p2.setPosition(0);
+        game.getPlayerQueue().add(p1);
+    }
+
+    @Test(expected = GameOverException.class)
+    public void testGameOver() throws InvalidPlayerException, GameOverException {
+        Player p1 = game.getNextPlayerToPlay();
+        p1.setPosition(75);
+        game.play(p1);
+        game.getNextPlayerToPlay();
     }
 
     @Test(expected = InvalidPlayerException.class)
@@ -68,7 +80,7 @@ public class GameTest {
     public static List<Cell> getCells(int numberOfCells) {
         List<Cell> cells = new ArrayList<>();
         for (int i = 1; i <= numberOfCells; i++) {
-            cells.add(new Cell(i));
+            cells.add(new Cell(i, new DefaultMove()));
         }
         return cells;
     }

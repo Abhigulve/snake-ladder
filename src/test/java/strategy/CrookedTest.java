@@ -2,7 +2,6 @@ package strategy;
 
 import org.junit.Assert;
 import org.junit.Test;
-import strategy.CrookedDice;
 
 public class CrookedTest {
 

@@ -15,20 +15,11 @@ public class Board {
     }
 
     public int getNextPosition(int currentPosition, int score) {
-        if (currentPosition < 0) {
+        if (currentPosition < 0)
             throw new IllegalArgumentException("Position should be greater than zero");
-        }
         Optional<Cell> nextCellByPosition = getNextCellByPosition(currentPosition + score);
-        if (!nextCellByPosition.isPresent()) {
-            return currentPosition;
-        }
-        Move move = nextCellByPosition.get().getMove();
-        if (move != null) {
-            return move.getNextPosition();
-        }
-        return nextCellByPosition.get().getPosition();
+        return nextCellByPosition.map(Cell::nextPosition).orElse(currentPosition);
     }
-
 
     private Optional<Cell> getNextCellByPosition(int position) {
         return cells.stream().filter(cell -> cell.getPosition() == position)

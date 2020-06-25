@@ -1,3 +1,4 @@
+import exception.GameOverException;
 import exception.InvalidPlayerException;
 import model.Board;
 import model.Player;
@@ -7,53 +8,53 @@ import strategy.Dice;
 import java.util.*;
 
 public class Game {
-    private List<Player> playerList;
-    private Board board;
+    private final Board board;
     private Dice dice;
-    private Map<Integer, Player> res;
+    private final Map<Integer, Player> res;
     private int winnerCount;
+    private final Queue<Player> playerQueue;
+
+    public Queue<Player> getPlayerQueue() {
+        return playerQueue;
+    }
 
     public Map<Integer, Player> getRes() {
         return res;
     }
-
-    public Dice getDice() {
-        return dice;
-    }
+    
 
     public void setDice(Dice dice) {
         this.dice = dice;
     }
 
     public Game(List<Player> playerList, Board board, Dice dice) {
-        this.playerList = playerList;
         this.board = board;
         this.dice = dice;
         this.res = new HashMap<>();
+        this.playerQueue = new ArrayDeque<>(playerList);
+    }
+
+    public Player getNextPlayerToPlay() throws GameOverException {
+        if (playerQueue.size() <= 1)
+            throw new GameOverException("Game is already over");
+        return playerQueue.poll();
     }
 
     void play(Player player) throws InvalidPlayerException {
         if (!checkReachToEnd(player)) {
-            int score = dice.rollDice();
-            int nextPosition = board.getNextPosition(player.getPosition(), score);
+            int nextPosition = board.getNextPosition(player.getPosition(), dice.rollDice());
             player.setPosition(nextPosition);
-            if (checkReachToEnd(player))
-                res.put(++winnerCount, player);
+            updateGameStatus(player);
         } else throw new InvalidPlayerException("player already reach end of game");
     }
 
-    void playGame() throws InvalidPlayerException {
-        int i = 0;
-        Queue<Player> queue = new ArrayDeque<>(playerList);
-        while (queue.size() != 1) {
-            Player player = queue.poll();
-            play(player);
-            if (!checkReachToEnd(player)) {
-                queue.add(player);
+    private void updateGameStatus(Player player) {
+        if (checkReachToEnd(player)) {
+            res.put(++winnerCount, player);
+            if (playerQueue.size() == 1) {
+                res.put(++winnerCount, playerQueue.poll());
             }
-        }
-        res.put(++i, queue.peek());
-        declareResult(res);
+        } else playerQueue.add(player);
     }
 
     private void declareResult(Map<Integer, Player> res) {

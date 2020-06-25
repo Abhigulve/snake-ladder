@@ -13,4 +13,6 @@ public class Snake extends Move {
             return true;
         else throw new InvalidPositionException("cell position always greater than next position of snake");
     }
+
+
 }

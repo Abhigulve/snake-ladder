@@ -47,7 +47,7 @@ public class BoardTest {
 
     @Test
     public void testGetPositionWhenMoveIsNotNull() throws InvalidPositionException {
-        board.getCells().get(10).setMove(new Snake(1));
+        board.getCells().set(10, new Cell(11, new Snake(1)));
         int nextPosition = board.getNextPosition(10, 1);
         Assert.assertEquals(1, nextPosition);
     }
