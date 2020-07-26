@@ -23,5 +23,4 @@ public class GreenSnake extends Move {
         }
         return next;
     }
-
 }

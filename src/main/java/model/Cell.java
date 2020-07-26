@@ -1,7 +1,7 @@
 package model;
 
 public class Cell {
-    private int position;
+    private final int position;
     private Move move = new DefaultMove();
 
     public Cell(int position) {
