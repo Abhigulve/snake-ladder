@@ -1,9 +1,6 @@
 package model;
 
 import exception.InvalidPositionException;
-import model.Board;
-import model.Cell;
-import model.Snake;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,32 +20,32 @@ public class BoardTest {
 
     @Test
     public void getNextPositionTest() {
-        int nextPosition = board.getNextPosition(2, 5);
+        int nextPosition = board.moveToNextPosition(2, 5);
         Assert.assertEquals(nextPosition, 7);
     }
 
     @Test
     public void testGetNextPositionWhenCurrentPositionIsAtEnd() {
-        int nextPosition = board.getNextPosition(100, 5);
+        int nextPosition = board.moveToNextPosition(100, 5);
         Assert.assertEquals(100, nextPosition);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetPositionWhenCurrentPositionIsLessThanZero() {
-        board.getNextPosition(-1, 5);
+        board.moveToNextPosition(-1, 5);
     }
 
 
     @Test
     public void testGetPositionWhenMoveIsNull() {
-        int nextPosition = board.getNextPosition(12, 5);
+        int nextPosition = board.moveToNextPosition(12, 5);
         Assert.assertEquals(17, nextPosition);
     }
 
     @Test
     public void testGetPositionWhenMoveIsNotNull() throws InvalidPositionException {
         board.getCells().set(10, new Cell(11, new Snake(1)));
-        int nextPosition = board.getNextPosition(10, 1);
+        int nextPosition = board.moveToNextPosition(10, 1);
         Assert.assertEquals(1, nextPosition);
     }
 

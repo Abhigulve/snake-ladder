@@ -14,7 +14,7 @@ public class Board {
         this.cells = cells;
     }
 
-    public int getNextPosition(int currentPosition, int score) {
+    public int moveToNextPosition(int currentPosition, int score) {
         if (currentPosition < 0)
             throw new IllegalArgumentException("Position should be greater than zero");
         Optional<Cell> nextCellByPosition = getNextCellByPosition(currentPosition + score);

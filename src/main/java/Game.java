@@ -40,9 +40,9 @@ public class Game {
         return playerQueue.poll();
     }
 
-    void play(Player player) throws InvalidPlayerException {
+    public void play(Player player) throws InvalidPlayerException {
         if (!checkReachToEnd(player)) {
-            int nextPosition = board.getNextPosition(player.getPosition(), dice.rollDice());
+            int nextPosition = board.moveToNextPosition(player.getPosition(), dice.rollDice());
             player.setPosition(nextPosition);
             updateGameStatus(player);
         } else throw new InvalidPlayerException("player already reach end of game");
